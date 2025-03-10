@@ -91,6 +91,10 @@ window.wp_consent_type = 'optin'
 let event = new CustomEvent('wp_consent_type_defined');
 document.dispatchEvent( event );
 
+//dispatch event when consent type is defined
+let event = new CustomEvent('wp_consent_type_defined');
+document.dispatchEvent( event );
+
 //consent management plugin sets cookie when consent category value changes
 wp_set_consent('marketing', 'allow');
 `
@@ -183,9 +187,6 @@ Cookies or any other form of local storage that can not be seen as statistics, s
 * Updated tested up to
 * Dropped loading of translations, and loading of plugin_data, to prevent translation loading notices by WordPress 6.7, props @mujuonly
 * Dropped obsolete function wp_has_cookie_info, props @szepeviktor
-
-= 1.0.7 =
-* Tested up to
 
 = 1.0.7 =
 * Tested up to

@@ -38,7 +38,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 *
 		 * @var array
 		 */
-		public $registered_cookies;
+		public array $registered_cookies;
 
 		/**
 		 * The Singleton.
@@ -102,6 +102,64 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 			);
 		}
 
+		/**
+		 * Get list of registered services
+		 *
+		 * @param bool $skip_admin_cookies
+		 *
+		 * @return array
+		 */
+		public function get_services( bool $skip_admin_cookies = false ): array {
+			$services = array();
+			$cookies = $this->registered_cookies;
+
+			//filter out all administratorCookie cookies
+			if ( $skip_admin_cookies ) {
+				$cookies = array_filter( $cookies, static function ( $cookie ) {
+					return ! $cookie['administratorCookie'];
+				} );
+			}
+
+			foreach ( $cookies as $cookie ) {
+				$services[] = $cookie['plugin_or_service'] ?? 'general';
+			}
+			return array_unique( $services );
+		}
+
+		/**
+		 * Get the category for this service
+		 * As each service can have cookies with different categories, we check all categories, and return the one with most privacy impact
+		 * e.g. if it has marketing and functional, we return marketing
+		 *
+		 * @param string $service
+		 *
+		 * @return string
+		 */
+		public function get_service_category( string $service ): string {
+			$categories = [];
+			foreach ( $this->registered_cookies as $cookie ) {
+				if ( $cookie['plugin_or_service'] === $service ) {
+					$categories[] = $cookie['category'] ?? 'marketing';
+				}
+			}
+			$categories = array_unique( $categories );
+			$available_categories = WP_Consent_API::$config->consent_categories();
+			//reverse order of $available_categories
+			$available_categories = array_reverse( $available_categories );
+
+			//find the first category that is in the list of categories for this service.
+			error_log("check marketing first ");
+			foreach ( $available_categories as $available_category ) {
+				error_log("check  $available_category");
+				if ( in_array( $available_category, $categories, true ) ) {
+					return $available_category;
+				}
+			}
+
+			//nothing found, assume the worst.
+			return 'marketing';
+		}
+
 
 		/**
 		 * Get cookie info for one specific cookie, or for all cookies registered.
@@ -110,12 +168,31 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 *
 		 * @return array
 		 */
-		public function get_cookie_info( $name = false ) {
+		public function get_cookie_info( $name = false ): array {
 			if ( $name && isset( $this->registered_cookies[ $name ] ) ) {
 				return $this->registered_cookies[ $name ];
 			}
 
 			return $this->registered_cookies;
+		}
+
+		/**
+		 * List of services for use in clientside javascript part
+		 *
+		 * @return array
+		 */
+		public function get_service_info(): array {
+			$services = $this->get_services( true );
+
+			$js_array = [];
+			foreach ( $services as $service ) {
+				$js_array[] = [
+					'name' => $service,
+					'category' => $this->get_service_category( $service )
+				];
+			}
+
+			return $js_array;
 		}
 	}
 }
