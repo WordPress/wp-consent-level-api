@@ -60,6 +60,7 @@ Categorized, and sorted alphabetically
 
 = Consent Management Providers =
 - [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
+- [Consent Studio](https://consent.studio/).
 - [Cookiebot](https://wordpress.org/plugins/cookiebot/).
 - [CookieHub](https://wordpress.org/plugins/cookiehub/).
 - [CookieYes – Cookie Banner for Cookie Consent](https://wordpress.org/plugins/cookie-law-info/).
