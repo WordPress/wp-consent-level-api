@@ -59,6 +59,7 @@ Categorized, and sorted alphabetically
 - [Example plugin](https://github.com/rlankhorst/consent-api-example-plugin). The plugin basically consists of a shortcode, with a div that shows a tracking or not tracking message. No actual tracking is done :-)
 
 = Consent Management Providers =
+- [Beautiful Cookie Consent Banner](https://wordpress.org/plugins/beautiful-and-responsive-cookie-consent/).
 - [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
 - [Consent Studio](https://consent.studio/).
 - [Cookiebot](https://wordpress.org/plugins/cookiebot/).
