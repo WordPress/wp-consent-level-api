@@ -4,7 +4,7 @@ Tags: consent, privacy, cookies, api, compliance
 Requires at least: 5.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.2
 Stable tag: 1.0.8
 
