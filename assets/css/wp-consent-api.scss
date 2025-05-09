@@ -1,0 +1,22 @@
+
+#health-check-accordion-block-wp-consent-api {
+	.title{
+		pointer-events: none;
+		font-weight: 600;
+		flex-grow: 1;
+		padding-top: 10px;
+	}
+	.actions{
+		padding: 20px 0px;
+	}
+	p {
+		background: #fff;
+		border-left: 4px solid #fff;
+		box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+		margin: 5px 15px 2px;
+		padding: 1px 12px;
+		border-left-color: #ffb900;
+		margin: 5px 20px 15px 0px;
+
+	}
+}
