@@ -62,6 +62,7 @@ Categorized, and sorted alphabetically
 - [Beautiful Cookie Consent Banner](https://wordpress.org/plugins/beautiful-and-responsive-cookie-consent/).
 - [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
 - [Consent Studio](https://consent.studio/).
+- [Conzent](https://conzent.net/).
 - [Cookiebot](https://wordpress.org/plugins/cookiebot/).
 - [CookieHub](https://wordpress.org/plugins/cookiehub/).
 - [CookieYes – Cookie Banner for Cookie Consent](https://wordpress.org/plugins/cookie-law-info/).
