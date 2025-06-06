@@ -36,29 +36,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you cannot directly access this file.' );
 }
 
-
-if ( ! function_exists( 'wp_consent_api_activation_check' ) ) {
-	/**
-	 * Checks if the plugin can safely be activated, at least php 5.6 and wp 5.0
-	 *
-	 * @since 1.0.0
-	 */
-	function wp_consent_api_activation_check() {
-		global $wp_version;
-
-		if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
-			wp_die( esc_html( __( 'This plugin requires PHP 5.6 or higher', 'wp-consent-api' ) ) );
-		}
-
-		if ( version_compare( $wp_version, '5.0', '<' ) ) {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
-			wp_die( esc_html( __( 'This plugin requires WordPress 5.0 or higher', 'wp-consent-api' ) ) );
-		}
-	}
-}
-register_activation_hook( __FILE__, 'wp_consent_api_activation_check' );
-
 if ( ! class_exists( 'WP_Consent_API' ) ) {
 	/**
 	 * WP_Consent_API class.

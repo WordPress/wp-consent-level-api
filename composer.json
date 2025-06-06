@@ -1,5 +1,5 @@
 {
-    "name": "rlankhorst/wp-consent-level-api",
+    "name": "wordpress/wp-consent-level-api",
     "description": "Consent API feature plugin for WordPress",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
