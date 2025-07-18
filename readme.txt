@@ -60,6 +60,7 @@ Categorized, and sorted alphabetically
 
 = Consent Management Providers =
 - [Beautiful Cookie Consent Banner](https://wordpress.org/plugins/beautiful-and-responsive-cookie-consent/).
+- [Clickio Consent](https://wordpress.org/plugins/clickio-consent/)
 - [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
 - [Consent Studio](https://consent.studio/).
 - [Conzent](https://conzent.net/).
@@ -69,6 +70,7 @@ Categorized, and sorted alphabetically
 - [GDPR Cookie Compliance](https://wordpress.org/plugins/gdpr-cookie-compliance/).
 - [GDPR Cookie Consent Plugin - CCPA Ready](https://www.webtoffee.com/product/gdpr-cookie-consent/).
 - [Pressidium Cookie Consent](https://wordpress.org/plugins/pressidium-cookie-consent/).
+- [TrustArc Cookie Consent Manager](https://wordpress.org/plugins/trustarc-cookie-consent-manager/)
 
 = Consent Requiring Plugins =
 - [AddToAny](https://wordpress.org/plugins/add-to-any/).
