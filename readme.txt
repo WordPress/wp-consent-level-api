@@ -1,10 +1,10 @@
 === WP Consent API ===
-Contributors: RogierLankhorst, xkon, aurooba, mujuonly, phpgeekdk, paapst, aahulsebos, pputzer, markwolters, szepeviktor
+Contributors: wordpressdotorg, RogierLankhorst, xkon, aurooba, mujuonly, phpgeekdk, paapst, aahulsebos, pputzer, markwolters, szepeviktor
 Tags: consent, privacy, cookies, api, compliance
 Requires at least: 5.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.2
 Stable tag: 1.0.8
 
@@ -59,11 +59,23 @@ Categorized, and sorted alphabetically
 - [Example plugin](https://github.com/rlankhorst/consent-api-example-plugin). The plugin basically consists of a shortcode, with a div that shows a tracking or not tracking message. No actual tracking is done :-)
 
 = Consent Management Providers =
+- [Abconsent Sirdata CMP](https://wordpress.org/plugins/sirdata-cmp/).
+- [Beautiful Cookie Consent Banner](https://wordpress.org/plugins/beautiful-and-responsive-cookie-consent/).
+- [Clickio Consent](https://wordpress.org/plugins/clickio-consent/)
 - [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
+- [Consent Studio](https://consent.studio/).
+- [consentmanager](https://wordpress.org/plugins/consent-manager/).
+- [Conzent](https://conzent.net/).
 - [Cookiebot](https://wordpress.org/plugins/cookiebot/).
+- [CookieFirst](https://wordpress.org/plugins/cookiefirst-gdpr-cookie-consent-banner/).
 - [CookieHub](https://wordpress.org/plugins/cookiehub/).
 - [CookieYes – Cookie Banner for Cookie Consent](https://wordpress.org/plugins/cookie-law-info/).
 - [GDPR Cookie Compliance](https://wordpress.org/plugins/gdpr-cookie-compliance/).
+- [GDPR Cookie Consent Plugin - CCPA Ready](https://www.webtoffee.com/product/gdpr-cookie-consent/).
+- [GetTerms](https://getterms.io/consent-manager/).
+- [iubenda | All-in-one Compliance](https://wordpress.org/plugins/iubenda-cookie-law-solution/).
+- [Pressidium Cookie Consent](https://wordpress.org/plugins/pressidium-cookie-consent/).
+- [TrustArc Cookie Consent Manager](https://wordpress.org/plugins/trustarc-cookie-consent-manager/)
 
 = Consent Requiring Plugins =
 - [AddToAny](https://wordpress.org/plugins/add-to-any/).
@@ -142,7 +154,7 @@ if (wp_has_consent('marketing')){
 //do marketing stuff
 }
 `
-Any code suggestions? We're on [GitHub](https://github.com/rlankhorst/wp-consent-level-api) as well!
+Any code suggestions? We're on [GitHub](https://github.com/WordPress/wp-consent-level-api) as well!
 
 == Installation ==
 To install this plugin:
