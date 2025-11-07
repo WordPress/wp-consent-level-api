@@ -72,6 +72,7 @@ Categorized, and sorted alphabetically
 - [CookieYes – Cookie Banner for Cookie Consent](https://wordpress.org/plugins/cookie-law-info/).
 - [GDPR Cookie Compliance](https://wordpress.org/plugins/gdpr-cookie-compliance/).
 - [GDPR Cookie Consent Plugin - CCPA Ready](https://www.webtoffee.com/product/gdpr-cookie-consent/).
+- [GetTerms](https://getterms.io/consent-manager/).
 - [iubenda | All-in-one Compliance](https://wordpress.org/plugins/iubenda-cookie-law-solution/).
 - [Pressidium Cookie Consent](https://wordpress.org/plugins/pressidium-cookie-consent/).
 - [TrustArc Cookie Consent Manager](https://wordpress.org/plugins/trustarc-cookie-consent-manager/)
