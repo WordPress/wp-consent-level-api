@@ -135,6 +135,7 @@ function wp_validate_consent_category( string $category ): string { // phpcs:ign
 }
 /**
  * Validates consent service.
+ * On wide adoption this should validate strictly against registered services. Right now, we fallback to a default sanitizer.
  *
  * @param string $service A consent service.
  *
@@ -149,7 +150,8 @@ function wp_validate_consent_service( string $service ): string { // phpcs:ignor
 		return $service;
 	}
 
-	return '';
+	//as not all services will be registered yet, we'll sanitize loosely currently.
+	return sanitize_text_field( $service );
 }
 
 /**

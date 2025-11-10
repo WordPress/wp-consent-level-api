@@ -241,6 +241,17 @@ Preferences:
 Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences.
 
 == Changelog ==
+= 2.0.0 =
+* New: Service-level consent API - allows granular consent control per service in addition to category-based consent
+* New: `wp_has_service_consent()` function to check if a specific service has consent
+* New: `wp_is_service_denied()` function to check if a specific service is explicitly denied
+* New: `wp_set_service_consent()` function to set consent for a specific service
+* New: `wp_consent_service_changed` action hook fires when service consent changes
+* New: JavaScript functions `wp_has_service_consent()`, `wp_is_service_denied()`, and `wp_set_service_consent()`
+* New: JavaScript event `wp_consent_api_status_change_service` for service consent changes
+* Improvement: Added type hints throughout codebase for better code quality and IDE support
+* Improvement: Added `init()` method for cleaner plugin initialization
+
 = 1.0.8 =
 * Updated tested up to
 * Dropped loading of translations, and loading of plugin_data, to prevent translation loading notices by WordPress 6.7, props @mujuonly

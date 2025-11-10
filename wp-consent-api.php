@@ -124,7 +124,7 @@ if ( ! class_exists( 'WP_Consent_API' ) ) {
 			define( 'WP_CONSENT_API_URL', plugin_dir_url( __FILE__ ) );
 			define( 'WP_CONSENT_API_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'WP_CONSENT_API_PLUGIN', plugin_basename( __FILE__ ) );
-			define( 'WP_CONSENT_API_VERSION', '1.0.8' );
+			define( 'WP_CONSENT_API_VERSION', '2.0.0' );
 			define( 'WP_CONSENT_API_PLUGIN_FILE', __FILE__ );
 		}
 
