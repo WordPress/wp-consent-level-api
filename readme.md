@@ -10,7 +10,7 @@ WP Consent API
 
 **Tested up to**: 5.3
 
-**Requires PHP**: 7.2
+**Requires PHP**: 7.4
 
 **Stable tag**: 1.0.0
 
