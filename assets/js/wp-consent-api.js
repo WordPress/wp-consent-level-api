@@ -171,31 +171,31 @@ function consent_api_get_cookie(name) {
 /**
  * Set a new consent category value.
  *
- * @param {string} name The consent category or service to update.
- * @param {string} value The value to update the consent category or service to.
+ * @param {string} category The consent category to update.
+ * @param {string} value The value to update the consent category to.
  */
-function wp_set_consent(name, value) {
-    let event;
-    if (value !== 'allow' && value !== 'deny') return;
-	let previous_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + name);
-    consent_api_set_cookie(consent_api.cookie_prefix + '_' + name, value);
+function wp_set_consent(category, value) {
+	let event;
+	if (value !== 'allow' && value !== 'deny') return;
+	var previous_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + category);
+	consent_api_set_cookie(consent_api.cookie_prefix + '_' + category, value);
 
-    //do not trigger a change event if nothing has changed.
-    if ( previous_value === value ) return;
+	//do not trigger a change event if nothing has changed.
+	if ( previous_value === value ) return;
 
-    let changedConsentCategory = [];
-    changedConsentCategory[name] = value;
-    try {
-        // For modern browsers except IE:
-        event = new CustomEvent('wp_listen_for_consent_change', {detail: changedConsentCategory});
-    } catch (err) {
-        // If IE 11 (or 10 or 9...?)
-        event = document.createEvent('Event');
-        event.initEvent('wp_listen_for_consent_change', true, true);
-        event.detail = changedConsentCategory;
-    }
-    // Dispatch/Trigger/Fire the event
-    document.dispatchEvent(event);
+	var changedConsentCategory = [];
+	changedConsentCategory[category] = value;
+	try {
+		// For modern browsers except IE:
+		event = new CustomEvent('wp_listen_for_consent_change', {detail: changedConsentCategory});
+	} catch (err) {
+		// If IE 11 (or 10 or 9...?)
+		event = document.createEvent('Event');
+		event.initEvent('wp_listen_for_consent_change', true, true);
+		event.detail = changedConsentCategory;
+	}
+	// Dispatch/Trigger/Fire the event
+	document.dispatchEvent(event);
 }
 
 
