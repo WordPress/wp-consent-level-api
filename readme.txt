@@ -85,19 +85,26 @@ JavaScript:
 if ( wp_has_service_consent( 'youtube' ) ) {
     //activate tracking
 }
+`
 
 //check if explicitly denied
+`
 if ( wp_is_service_denied( 'facebook-pixel' ) ) {
     //service denied
 }
+`
 
 //set service consent
+`
 wp_set_service_consent( 'youtube', true );
+`
 
 //listen for service consent changes
+`
 document.addEventListener( 'wp_consent_api_status_change_service', function( e ) {
     console.log( 'Service: ' + e.detail.service + ', consented: ' + e.detail.value );
 });
+`
 
 ## Existing integrations
 Categorized, and sorted alphabetically
@@ -146,10 +153,6 @@ Below are the plugins used to set up the demo site:
 window.wp_consent_type = 'optin'
 
 //dispatch event when consent type is defined. This is useful if the region is detected server side, so the consent type is defined later during the pageload
-let event = new CustomEvent('wp_consent_type_defined');
-document.dispatchEvent( event );
-
-//dispatch event when consent type is defined
 let event = new CustomEvent('wp_consent_type_defined');
 document.dispatchEvent( event );
 
