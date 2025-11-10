@@ -251,6 +251,7 @@ Cookies or any other form of local storage that can not be seen as statistics, s
 * New: JavaScript event `wp_consent_api_status_change_service` for service consent changes
 * Improvement: Added type hints throughout codebase for better code quality and IDE support
 * Improvement: Added `init()` method for cleaner plugin initialization
+* Security: escape logged notice in _doing_it_wrong function, props @mujuonly
 
 = 1.0.8 =
 * Updated tested up to
