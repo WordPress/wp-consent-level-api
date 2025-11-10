@@ -44,7 +44,7 @@ if ( ! class_exists( 'WP_Consent_API_Config' ) ) {
 		 *
 		 * @return array
 		 */
-		public function consent_types() {
+		public function consent_types(): array {
 			return apply_filters(
 				'wp_consent_types',
 				array(
@@ -61,7 +61,7 @@ if ( ! class_exists( 'WP_Consent_API_Config' ) ) {
 		 *
 		 * @return string
 		 */
-		public function consent_cookie_prefix() {
+		public function consent_cookie_prefix(): string {
 			return apply_filters(
 				'wp_consent_cookie_prefix',
 				'wp_consent'
@@ -75,7 +75,7 @@ if ( ! class_exists( 'WP_Consent_API_Config' ) ) {
 		 *
 		 * @return array
 		 */
-		public function consent_categories() {
+		public function consent_categories(): array {
 			return apply_filters(
 				'wp_consent_categories',
 				array(
@@ -95,7 +95,7 @@ if ( ! class_exists( 'WP_Consent_API_Config' ) ) {
 		 *
 		 * @return array $consent_values
 		 */
-		public function consent_values() {
+		public function consent_values(): array {
 			return apply_filters(
 				'wp_consent_values',
 				array(
@@ -112,7 +112,7 @@ if ( ! class_exists( 'WP_Consent_API_Config' ) ) {
 		 *
 		 * @return int Cookie expiration in days.
 		 */
-		public function cookie_expiration_days() {
+		public function cookie_expiration_days(): int {
 			return apply_filters( 'wp_cookie_expiration', 30 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
 		}
 	}
