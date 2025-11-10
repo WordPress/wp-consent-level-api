@@ -7,7 +7,7 @@
 	<description>A custom set of code standard rules to check for WordPress plugins.</description>
 
 	<config name="minimum_supported_wp_version" value="5.0"/>
-	<config name="testVersion" value="7.2-"/>
+	<config name="testVersion" value="7.4-"/>
 
 	<!-- Include the WordPress ruleset, with exclusions. -->
 	<rule ref="WordPress" />
