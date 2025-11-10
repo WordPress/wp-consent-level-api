@@ -59,6 +59,58 @@ if ( ! function_exists( 'wp_consent_api_activation_check' ) ) {
 }
 register_activation_hook( __FILE__, 'wp_consent_api_activation_check' );
 
+// Display update information for the plugin.
+add_action('in_plugin_update_message-wp-consent-api/wp-consent-api.php', 'wpcapi_update_message', 10, 2 );
+
+if ( ! function_exists( 'wpcapi_update_message' ) ) {
+
+    /**
+     *  @since 1.0.9
+     *  Upgrade notice in plugins page.
+     */
+
+    function wpcapi_update_message( $data, $response )
+    {
+        if ( isset( $data['upgrade_notice'] ) )
+        {
+            add_action( 'admin_print_footer_scripts', 'wpcapi_plugin_screen_update_notice_js' );
+            $msg = str_replace( array( '<p>', '</p>' ), array( '<div>', '</div>' ), $data['upgrade_notice'] );
+            echo '<style type="text/css">
+            #wp-consent-api-update .update-message p:last-child{ display:none;}     
+            #wp-consent-api-update ul{ list-style:disc; margin-left:30px;}
+            .wpcapi_update_message{ padding-left:20px;}
+            </style>
+            <div class="update-message wpcapi_update_message">' . wp_kses_post( wpautop( $msg ) ) . '</div>';
+        }
+    }
+}
+
+if ( ! function_exists( 'wpcapi_plugin_screen_update_notice_js' ) ) {
+    /**
+     *  @since 1.0.9
+     *  Javascript code for upgrade notice in plugins page.
+     */
+    function wpcapi_plugin_screen_update_notice_js() 
+    {   
+        global $pagenow;
+        if('plugins.php' != $pagenow)
+        {
+            return;
+        }
+        ?>
+        <script>
+            ( function( $ ){
+                var update_dv=$('#wpcapi-update');
+                update_dv.find('.wpcapi_update_message').next('p').remove();
+                update_dv.find('a.update-link:eq(0)').on('click', function(){
+                    $('.wpcapi_update_message').remove();
+                });
+            })( jQuery );
+        </script>
+        <?php
+    }
+}
+
 if ( ! class_exists( 'WP_Consent_API' ) ) {
 	/**
 	 * WP_Consent_API class.
