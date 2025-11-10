@@ -38,7 +38,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 *
 		 * @var array
 		 */
-		public array $registered_cookies;
+		public array $registered_cookies = [];
 
 		/**
 		 * The Singleton.
