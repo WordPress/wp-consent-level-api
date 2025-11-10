@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return void
  */
-function wp_consent_api_enqueue_assets() {
+function wp_consent_api_enqueue_assets(): void {
 	$minified = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 	wp_enqueue_script( 'wp-consent-api', WP_CONSENT_API_URL . "assets/js/wp-consent-api$minified.js", array(), WP_CONSENT_API_VERSION, true );
 
@@ -74,7 +74,7 @@ add_action( 'wp_enqueue_scripts', 'wp_consent_api_enqueue_assets', PHP_INT_MAX -
  *
  * @param string $hook Hook name.
  */
-function wp_consent_api_enqueue_admin_assets( $hook ) {
+function wp_consent_api_enqueue_admin_assets( $hook ): void {
     if ( 'site-health.php' !== $hook ) {
 	    return;
     }
@@ -91,14 +91,14 @@ add_action( 'admin_enqueue_scripts', 'wp_consent_api_enqueue_admin_assets' );
  *
  * @param string $consent_type A consent type.
  *
- * @return bool|string The validated consent type, or `false`.
+ * @return string The validated consent type, or `false`.
  */
-function wp_validate_consent_type( $consent_type ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+function wp_validate_consent_type( string $consent_type ): string { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	if ( in_array( $consent_type, WP_Consent_API::$config->consent_types(), true ) ) {
 		return $consent_type;
 	}
 
-	return false;
+	return '';
 }
 
 /**
@@ -108,25 +108,25 @@ function wp_validate_consent_type( $consent_type ) { // phpcs:ignore WordPress.N
  *
  * @param string $value A consent value.
  *
- * @return bool|string The validated consent type, or false.
+ * @return string The validated consent type, or false.
  */
-function wp_validate_consent_value( $value ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+function wp_validate_consent_value( string $value ): string { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	if ( in_array( $value, WP_Consent_API::$config->consent_values(), true ) ) {
 		return $value;
 	}
-	return false;
+	return '';
 }
 
 /**
  * Validates consent category.
  *
- * @since 1.0.0
- *
  * @param string $category A consent category.
  *
  * @return string The validated category, default functional
+ *@since 1.0.0
+ *
  */
-function wp_validate_consent_category( $category ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+function wp_validate_consent_category( string $category ): string { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	if ( in_array( $category, WP_Consent_API::$config->consent_categories(), true ) ) {
 		return $category;
 	}
@@ -157,10 +157,10 @@ function wp_validate_consent_service( string $service ): string { // phpcs:ignor
  *
  * @since 1.0.0
  *
- * @return string|bool
+ * @return string
  */
-function wp_get_consent_type() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
-	return apply_filters( 'wp_get_consent_type', false ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
+function wp_get_consent_type(): string { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	return apply_filters( 'wp_get_consent_type', '' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
 }
 
 /**
@@ -169,25 +169,16 @@ function wp_get_consent_type() { // phpcs:ignore WordPress.NamingConventions.Pre
  *
  * @since 1.0.0
  *
- * @param string      $item     The consent category.
- * @param string|bool $requested_by Plugin name e.g. complianz-gdpr/complianz-gdpr.php. This can be used to disable consent for a plugin specifically.
- * @param string      $type         One of 'category' or 'service'.
+ * @param string      $category     The consent category.
+ * @param ?string $requested_by Plugin name e.g. complianz-gdpr/complianz-gdpr.php. This can be used to disable consent for a plugin specifically.
  *
  * @return bool
  */
-function wp_has_consent( $item, $requested_by = false, $type='category' ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+function wp_has_consent( string $category, ?string $requested_by = null ): bool { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	$consent_type     = wp_get_consent_type();
-	$item             = 'category' === $type ? wp_validate_consent_category( $item ) : wp_validate_consent_service( $item );;
+	$category             = wp_validate_consent_category( $category );
 	$prefix           = WP_Consent_API::$config->consent_cookie_prefix();
-	$cookie_name      = "{$prefix}_{$item}";
-
-	//for service consent, we start checking if the service's category already has consent. If so, return true and bail.
-	if ( 'service' === $type ) {
-		$category = WP_Consent_API::$cookie_info->get_service_category( $item );
-		if ( wp_has_consent( $category, $requested_by, 'category' ) ) {
-			return true;
-		}
-	}
+	$cookie_name      = "{$prefix}_{$category}";
 
 	if ( ! $consent_type ) {
 		// If consent_type is not set, there's no consent management, we should
@@ -203,7 +194,138 @@ function wp_has_consent( $item, $requested_by = false, $type='category' ) { // p
 		$has_consent = false;
 	}
 
-	return apply_filters( 'wp_has_consent', $has_consent, $item, $requested_by, $type ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
+	return apply_filters( 'wp_has_consent', $has_consent, $category, $requested_by ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
+}
+
+/**
+ * Check if a specific service has consent
+ *
+ * @since 1.0.8
+ *
+ * @param string      $service      The service name.
+ * @param string|bool $requested_by Plugin name e.g. complianz-gdpr/complianz-gdpr.php. This can be used to disable consent for a plugin specifically.
+ *
+ * @return bool
+ */
+function wp_has_service_consent( $service, $requested_by = false ): bool { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	$service = wp_validate_consent_service( $service );
+
+	// If service is not valid, return false
+	if ( empty( $service ) ) {
+		return false;
+	}
+
+	$prefix = WP_Consent_API::$config->consent_cookie_prefix();
+	$cookie_name = "{$prefix}_consented_services";
+
+	// Check if it's in the consented services cookie
+	$consented_services = array();
+	if ( isset( $_COOKIE[ $cookie_name ] ) ) {
+		$consented_services_json = stripslashes( $_COOKIE[ $cookie_name ] );
+		$consented_services = json_decode( $consented_services_json, true );
+
+		if ( ! is_array( $consented_services ) ) {
+			$consented_services = array();
+		}
+	}
+
+	if ( ! isset( $consented_services[ $service ] ) ) {
+		// Default to the category
+		$category = WP_Consent_API::$cookie_info->get_service_category( $service );
+		return wp_has_consent( $category, $requested_by );
+	}
+
+	$has_consent = (bool) $consented_services[ $service ];
+
+	return apply_filters( 'wp_has_service_consent', $has_consent, $service, $requested_by ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
+}
+
+/**
+ * Check if a specific service is denied
+ *
+ * @since 1.0.8
+ *
+ * @param string      $service      The service name.
+ * @param ?string $requested_by Plugin name e.g. complianz-gdpr/complianz-gdpr.php. This can be used to disable consent for a plugin specifically.
+ *
+ * @return bool
+ */
+function wp_is_service_denied( string $service, ?string $requested_by = null ): bool { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	$service = wp_validate_consent_service( $service );
+
+	// If service is not valid, return false
+	if ( empty( $service ) ) {
+		return false;
+	}
+
+	$prefix = WP_Consent_API::$config->consent_cookie_prefix();
+	$cookie_name = "{$prefix}_consented_services";
+
+	// Check if it's in the consented services cookie
+	$consented_services = array();
+	if ( isset( $_COOKIE[ $cookie_name ] ) ) {
+		$consented_services_json = stripslashes( $_COOKIE[ $cookie_name ] );
+		$consented_services = json_decode( $consented_services_json, true );
+
+		if ( ! is_array( $consented_services ) ) {
+			$consented_services = array();
+		}
+	}
+
+	if ( ! isset( $consented_services[ $service ] ) ) {
+		return false;
+	}
+
+	$is_denied = ! (bool) $consented_services[ $service ];
+
+	return apply_filters( 'wp_is_service_denied', $is_denied, $service, $requested_by ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
+}
+
+/**
+ * Set consent for a specific service
+ *
+ * @since 1.0.8
+ *
+ * @param string $service   The service name.
+ * @param bool   $consented Whether consent is given (true) or denied (false).
+ *
+ * @return void
+ */
+function wp_set_service_consent( string $service, bool $consented ): void { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	$service = wp_validate_consent_service( $service );
+
+	// If service is not valid, bail
+	if ( empty( $service ) ) {
+		return;
+	}
+
+	$prefix = WP_Consent_API::$config->consent_cookie_prefix();
+	$cookie_name = "{$prefix}_consented_services";
+	$expiration = wp_consent_api_cookie_expiration() * DAY_IN_SECONDS;
+
+	// Get existing services
+	$consented_services = array();
+	if ( isset( $_COOKIE[ $cookie_name ] ) ) {
+		$consented_services_json = stripslashes( $_COOKIE[ $cookie_name ] );
+		$consented_services = json_decode( $consented_services_json, true );
+
+		if ( ! is_array( $consented_services ) ) {
+			$consented_services = array();
+		}
+	}
+
+	$previous_value = $consented_services[ $service ] ?? null;
+	$consented = (bool) $consented;
+	$consented_services[ $service ] = $consented;
+
+	setcookie( $cookie_name, wp_json_encode( $consented_services ), time() + $expiration, '/' );
+
+	// Don't trigger event if nothing changed
+	if ( $previous_value === $consented ) {
+		return;
+	}
+
+	do_action( 'wp_consent_api_status_change_service', $service, $consented ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
 }
 
 /**
@@ -211,7 +333,7 @@ function wp_has_consent( $item, $requested_by = false, $type='category' ) { // p
  *
  * @return int Expiration in days.
  */
-function wp_consent_api_cookie_expiration() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+function wp_consent_api_cookie_expiration(): int { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	return apply_filters( 'wp_consent_api_cookie_expiration', WP_Consent_API::$config->cookie_expiration_days() );
 }
 
@@ -220,22 +342,20 @@ function wp_consent_api_cookie_expiration() { // phpcs:ignore WordPress.NamingCo
  *
  * @since 1.0.0
  *
- * @param string $item The consent category.
+ * @param string $category The consent category.
  * @param string $value    The value (either 'allow' or 'deny').
- * @param string $type     One of 'category' or 'service'.
  *
  * @return void
  */
-function wp_set_consent( $item, $value, $type = 'category' ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
-	$item     = apply_filters( 'wp_set_consent_type', $item, $type ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
+function wp_set_consent( string $category, string $value ): void { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	$value    = apply_filters( 'wp_set_consent_value', $value ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
 
 	$expiration = wp_consent_api_cookie_expiration() * DAY_IN_SECONDS;
-	$item       = 'category' === $type ? wp_validate_consent_category( $item ) : wp_validate_consent_service( $item );
+	$category       = wp_validate_consent_category( $category );
 	$value      = wp_validate_consent_value( $value );
 	$prefix     = WP_Consent_API::$config->consent_cookie_prefix();
 
-	setcookie( "{$prefix}_{$item}", $value, time() + $expiration, '/' );
+	setcookie( "{$prefix}_{$category}", $value, time() + $expiration, '/' );
 }
 
 /**

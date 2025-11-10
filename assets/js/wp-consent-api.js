@@ -19,9 +19,7 @@ window.waitfor_consent_hook = consent_api.waitfor_consent_hook;
  * Check if a specific service has consent
  * @param {string} service
  */
-function wp_service_has_consent(service) {
-	console.log("has consent check for "+service);
-
+function wp_has_service_consent(service) {
 	//Check if it's in the consented services cookie
 	let consented_services_json = consent_api_get_cookie(consent_api.cookie_prefix + '_' + 'consented_services');
 	let consented_services;
@@ -91,8 +89,6 @@ function wp_set_service_consent( service, consented ){
  */
 function wp_has_consent(category) {
 	let has_consent = false;
-	console.log("has consent check for "+category);
-
 	let consent_type;
     if ( typeof (window.wp_consent_type) !== "undefined" ){
         consent_type = window.wp_consent_type;
@@ -122,12 +118,19 @@ function wp_has_consent(category) {
  * @returns {string}
  */
 function wp_get_service_category( service ) {
+	// Check if services array exists and is valid
+	if (!consent_api.services || !Array.isArray(consent_api.services)) {
+		return 'marketing';
+	}
+
 	let services = consent_api.services;
-	services.forEach(function(service_item) {
-		if ( service_item.name === service ) {
-			return service_item.category;
+	for (let i = 0; i < services.length; i++) {
+		if (services[i] &&
+			services[i].name === service &&
+			services[i].category) {
+			return services[i].category;
 		}
-	});
+	}
 	return 'marketing';
 }
 

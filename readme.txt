@@ -5,8 +5,8 @@ Requires at least: 5.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tested up to: 6.8
-Requires PHP: 7.2
-Stable tag: 1.0.8
+Requires PHP: 7.4
+Stable tag: 2.0.0
 
 Simple Consent API to read and register the current consent category.
 
@@ -51,6 +51,53 @@ Clientside, a consent management plugin can dynamically manipulate the consent t
 A plugin can use a hook to listen for changes or check the value of a given category.
 
 Categories and most other stuff can be extended with a filter.
+
+= Service-level consent =
+In addition to category-based consent, the API supports service-level consent control. This allows consent management plugins to grant or deny consent for specific services (like 'google-analytics' or 'facebook-pixel') independently from their category. When checking service consent with wp_has_service_consent(), the API first checks if explicit consent exists for that service. If no explicit consent is set, it falls back to the consent status of the service's category. This enables fine-grained control: a user might accept statistics cookies in general, but explicitly deny a specific analytics service.
+
+Service consent can be checked and set both server-side (PHP) and client-side (JavaScript):
+
+PHP:
+`
+//check if a specific service has consent
+if ( wp_has_service_consent( 'google-analytics' ) ) {
+    //activate google analytics
+}
+
+//check if a service is explicitly denied
+if ( wp_is_service_denied( 'facebook-pixel' ) ) {
+    //service was explicitly denied by user
+}
+
+//set service consent
+wp_set_service_consent( 'google-analytics', true ); //grant consent
+wp_set_service_consent( 'facebook-pixel', false ); //deny consent
+
+//listen for service consent changes
+add_action( 'wp_consent_service_changed', function( $service, $consented ) {
+    error_log( "Service {$service} consent changed to: " . ( $consented ? 'granted' : 'denied' ) );
+}, 10, 2 );
+`
+
+JavaScript:
+`
+//check service consent
+if ( wp_has_service_consent( 'youtube' ) ) {
+    //activate tracking
+}
+
+//check if explicitly denied
+if ( wp_is_service_denied( 'facebook-pixel' ) ) {
+    //service denied
+}
+
+//set service consent
+wp_set_service_consent( 'youtube', true );
+
+//listen for service consent changes
+document.addEventListener( 'wp_consent_api_status_change_service', function( e ) {
+    console.log( 'Service: ' + e.detail.service + ', consented: ' + e.detail.value );
+});
 
 ## Existing integrations
 Categorized, and sorted alphabetically

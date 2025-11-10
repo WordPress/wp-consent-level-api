@@ -82,7 +82,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 * @param string $type                    One of 'HTTP', 'LOCALSTORAGE', or 'API'.
 		 * @param string $domain                  Optional. Domain on which the cookie is set. Defaults to the current site URL.
 		 */
-		public function add_cookie_info( $name, $plugin_or_service, $category, $expires, $function, $collected_personal_data = '', $member_cookie = false, $administrator_cookie = false, $type = 'HTTP', $domain = '' ) {
+		public function add_cookie_info( string $name, string $plugin_or_service, string $category, string $expires, string $function, string $collected_personal_data = '', bool $member_cookie = false, bool $administrator_cookie = false, string $type = 'HTTP', string $domain = '' ): void {
 
 			// If the domain is not passed, we assume it's first party, from this domain.
 			if ( empty( $domain ) ) {
@@ -148,9 +148,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 			$available_categories = array_reverse( $available_categories );
 
 			//find the first category that is in the list of categories for this service.
-			error_log("check marketing first ");
 			foreach ( $available_categories as $available_category ) {
-				error_log("check  $available_category");
 				if ( in_array( $available_category, $categories, true ) ) {
 					return $available_category;
 				}
@@ -164,12 +162,12 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		/**
 		 * Get cookie info for one specific cookie, or for all cookies registered.
 		 *
-		 * @param string|bool $name The name of the cookie.
+		 * @param string $name The name of the cookie.
 		 *
 		 * @return array
 		 */
-		public function get_cookie_info( $name = false ): array {
-			if ( $name && isset( $this->registered_cookies[ $name ] ) ) {
+		public function get_cookie_info( string $name = '' ): array {
+			if ( !empty( $name ) && isset( $this->registered_cookies[ $name ] ) ) {
 				return $this->registered_cookies[ $name ];
 			}
 
@@ -182,6 +180,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 * @return array
 		 */
 		public function get_service_info(): array {
+			//skip admin cookies, as these are considered functional.
 			$services = $this->get_services( true );
 
 			$js_array = [];
