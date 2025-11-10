@@ -115,7 +115,6 @@ if ( ! class_exists( 'WP_Consent_API_Site_Health' ) ) {
 			}
 
 			return $result;
-
 		}
 	}
 }

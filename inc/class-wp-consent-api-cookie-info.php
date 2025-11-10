@@ -38,7 +38,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 *
 		 * @var array
 		 */
-		public array $registered_cookies = [];
+		public array $registered_cookies = array();
 
 		/**
 		 * The Singleton.
@@ -111,13 +111,16 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 */
 		public function get_services( bool $skip_admin_cookies = false ): array {
 			$services = array();
-			$cookies = $this->registered_cookies;
+			$cookies  = $this->registered_cookies;
 
-			//filter out all administratorCookie cookies
+			// filter out all administratorCookie cookies
 			if ( $skip_admin_cookies ) {
-				$cookies = array_filter( $cookies, static function ( $cookie ) {
-					return ! $cookie['administratorCookie'];
-				} );
+				$cookies = array_filter(
+					$cookies,
+					static function ( $cookie ) {
+						return ! $cookie['administratorCookie'];
+					}
+				);
 			}
 
 			foreach ( $cookies as $cookie ) {
@@ -136,25 +139,25 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 * @return string
 		 */
 		public function get_service_category( string $service ): string {
-			$categories = [];
+			$categories = array();
 			foreach ( $this->registered_cookies as $cookie ) {
 				if ( $cookie['plugin_or_service'] === $service ) {
 					$categories[] = $cookie['category'] ?? 'marketing';
 				}
 			}
-			$categories = array_unique( $categories );
+			$categories           = array_unique( $categories );
 			$available_categories = WP_Consent_API::$config->consent_categories();
-			//reverse order of $available_categories
+			// reverse order of $available_categories
 			$available_categories = array_reverse( $available_categories );
 
-			//find the first category that is in the list of categories for this service.
+			// find the first category that is in the list of categories for this service.
 			foreach ( $available_categories as $available_category ) {
 				if ( in_array( $available_category, $categories, true ) ) {
 					return $available_category;
 				}
 			}
 
-			//nothing found, assume the worst.
+			// nothing found, assume the worst.
 			return 'marketing';
 		}
 
@@ -167,7 +170,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 * @return array
 		 */
 		public function get_cookie_info( string $name = '' ): array {
-			if ( !empty( $name ) && isset( $this->registered_cookies[ $name ] ) ) {
+			if ( ! empty( $name ) && isset( $this->registered_cookies[ $name ] ) ) {
 				return $this->registered_cookies[ $name ];
 			}
 
@@ -180,15 +183,15 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 * @return array
 		 */
 		public function get_service_info(): array {
-			//skip admin cookies, as these are considered functional.
+			// skip admin cookies, as these are considered functional.
 			$services = $this->get_services( true );
 
-			$js_array = [];
+			$js_array = array();
 			foreach ( $services as $service ) {
-				$js_array[] = [
-					'name' => $service,
-					'category' => $this->get_service_category( $service )
-				];
+				$js_array[] = array(
+					'name'     => $service,
+					'category' => $this->get_service_category( $service ),
+				);
 			}
 
 			return $js_array;
