@@ -16,21 +16,82 @@ window.wp_fallback_consent_type = consent_api.consent_type;
 window.waitfor_consent_hook = consent_api.waitfor_consent_hook;
 
 /**
+ * Check if a specific service has consent
+ * @param {string} service
+ */
+function wp_service_has_consent(service) {
+	console.log("has consent check for "+service);
+
+	//Check if it's in the consented services cookie
+	let consented_services_json = consent_api_get_cookie(consent_api.cookie_prefix + '_' + 'consented_services');
+	let consented_services;
+	try {
+		consented_services = JSON.parse(consented_services_json);
+	} catch (e) {
+		consented_services = {};
+	}
+
+	if ( !consented_services.hasOwnProperty( service ) ){
+		//default to the category
+		const category = wp_get_service_category(service);
+		return wp_has_consent( category );
+	} else {
+		return consented_services[service];
+	}
+}
+/**
+ * Check if a specific service is denied
+ * @param {string} service
+ */
+function wp_is_service_denied( service ) {
+	//Check if it's in the consented services cookie
+	let consented_services_json = consent_api_get_cookie(consent_api.cookie_prefix + '_' + 'consented_services');
+	let consented_services;
+	try {
+		consented_services = JSON.parse(consented_services_json);
+	} catch (e) {
+		consented_services = {};
+	}
+
+	if ( !consented_services.hasOwnProperty( service ) ){
+		return false;
+	} else {
+		return !consented_services[service];
+	}
+}
+
+/**
+ * Set consent for a specific service
+ * @param {string} service
+ * @param {boolean} consented
+ */
+function wp_set_service_consent( service, consented ){
+	let consented_services_json = consent_api_get_cookie(consent_api.cookie_prefix + '_' + 'consented_services');
+	let consented_services;
+	try {
+		consented_services = JSON.parse(consented_services_json);
+	} catch (e) {
+		consented_services = {};
+	}
+	consented_services[service] = consented;
+	consent_api_set_cookie(consent_api.cookie_prefix + '_consented_services', JSON.stringify(consented_services));
+
+	let details = {};
+	details.service = service;
+	details.value = consented;
+	let event = new CustomEvent('wp_consent_api_status_change_service', { detail: details });
+	document.dispatchEvent(event);
+}
+
+
+/**
  * Check if a user has given consent for a specific category.
  *
- * @param {string} item The item to check consent against.
- * @param {string} type category or service
+ * @param {string} category The item to check consent against.
  */
-function wp_has_consent(item, type= 'category') {
+function wp_has_consent(category) {
 	let has_consent = false;
-	console.log("has consent check for "+item);
-	//for service consent, we start checking if the service's category already has consent. If so, return true and bail.
-	if ( 'service' === type ) {
-		let category = wp_get_service_category( item );
-		if ( wp_has_consent(category) ) {
-			has_consent = true;
-		}
-	}
+	console.log("has consent check for "+category);
 
 	let consent_type;
     if ( typeof (window.wp_consent_type) !== "undefined" ){
@@ -39,7 +100,7 @@ function wp_has_consent(item, type= 'category') {
         consent_type = window.wp_fallback_consent_type
     }
 
-    let cookie_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + item);
+    let cookie_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + category);
     if ( !consent_type ) {
         //if consent_type is not set, there's no consent management, we should return true to activate all cookies
         has_consent = true;
@@ -99,7 +160,7 @@ function consent_api_get_cookie(name) {
 
     for (var i = 0; i < cookies.length; i++) {
         var cookie = cookies[i].trim();
-        if (cookie.indexOf(name) == 0)
+        if ( cookie.indexOf(name) === 0 )
             return cookie.substring(name.length, cookie.length);
     }
 
