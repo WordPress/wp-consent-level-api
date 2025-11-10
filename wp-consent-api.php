@@ -22,11 +22,11 @@
  * Plugin Name:       WP Consent API
  * Plugin URI:        https://wordpress.org/plugins/wp-consent-api
  * Description:       Consent Level API to read and register the current consent level for cookie management and improving compliance with privacy laws.
- * Version:           1.0.8
+ * Version:           2.0.0
  * Author:            WordPress Contributors
  * Author URI:        https://github.com/WordPress/wp-consent-level-api
  * Requires at least: 5.0
- * Requires PHP:      7.2
+ * Requires PHP:      7.4
  * License:           GPL2+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -35,29 +35,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you cannot directly access this file.' );
 }
-
-
-if ( ! function_exists( 'wp_consent_api_activation_check' ) ) {
-	/**
-	 * Checks if the plugin can safely be activated, at least php 5.6 and wp 5.0
-	 *
-	 * @since 1.0.0
-	 */
-	function wp_consent_api_activation_check() {
-		global $wp_version;
-
-		if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
-			wp_die( esc_html( __( 'This plugin requires PHP 5.6 or higher', 'wp-consent-api' ) ) );
-		}
-
-		if ( version_compare( $wp_version, '5.0', '<' ) ) {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
-			wp_die( esc_html( __( 'This plugin requires WordPress 5.0 or higher', 'wp-consent-api' ) ) );
-		}
-	}
-}
-register_activation_hook( __FILE__, 'wp_consent_api_activation_check' );
 
 if ( ! class_exists( 'WP_Consent_API' ) ) {
 	/**
@@ -110,6 +87,17 @@ if ( ! class_exists( 'WP_Consent_API' ) ) {
 		}
 
 		/**
+		 * Initialize the plugin.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return void
+		 */
+		public static function init(): void {
+			self::get_instance();
+		}
+
+		/**
 		 * Constructor.
 		 *
 		 * @since 1.0.0
@@ -136,7 +124,7 @@ if ( ! class_exists( 'WP_Consent_API' ) ) {
 			define( 'WP_CONSENT_API_URL', plugin_dir_url( __FILE__ ) );
 			define( 'WP_CONSENT_API_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'WP_CONSENT_API_PLUGIN', plugin_basename( __FILE__ ) );
-			define( 'WP_CONSENT_API_VERSION', '1.0.8' );
+			define( 'WP_CONSENT_API_VERSION', '2.0.0' );
 			define( 'WP_CONSENT_API_PLUGIN_FILE', __FILE__ );
 		}
 
@@ -159,5 +147,5 @@ if ( ! class_exists( 'WP_Consent_API' ) ) {
 	/**
 	 * Load the plugins main class.
 	 */
-	add_action( 'plugins_loaded', array( WP_Consent_API::class, 'get_instance' ), 9 );
+	add_action( 'plugins_loaded', array( WP_Consent_API::class, 'init' ), 9 );
 }

@@ -5,8 +5,8 @@ Requires at least: 5.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tested up to: 6.8
-Requires PHP: 7.2
-Stable tag: 1.0.8
+Requires PHP: 7.4
+Stable tag: 2.0.0
 
 Simple Consent API to read and register the current consent category.
 
@@ -51,6 +51,53 @@ Clientside, a consent management plugin can dynamically manipulate the consent t
 A plugin can use a hook to listen for changes or check the value of a given category.
 
 Categories and most other stuff can be extended with a filter.
+
+= Service-level consent =
+In addition to category-based consent, the API supports service-level consent control. This allows consent management plugins to grant or deny consent for specific services (like 'google-analytics' or 'facebook-pixel') independently from their category. When checking service consent with wp_has_service_consent(), the API first checks if explicit consent exists for that service. If no explicit consent is set, it falls back to the consent status of the service's category. This enables fine-grained control: a user might accept statistics cookies in general, but explicitly deny a specific analytics service.
+
+Service consent can be checked and set both server-side (PHP) and client-side (JavaScript):
+
+PHP:
+`
+//check if a specific service has consent
+if ( wp_has_service_consent( 'google-analytics' ) ) {
+    //activate google analytics
+}
+
+//check if a service is explicitly denied
+if ( wp_is_service_denied( 'facebook-pixel' ) ) {
+    //service was explicitly denied by user
+}
+
+//set service consent
+wp_set_service_consent( 'google-analytics', true ); //grant consent
+wp_set_service_consent( 'facebook-pixel', false ); //deny consent
+
+//listen for service consent changes
+add_action( 'wp_consent_service_changed', function( $service, $consented ) {
+    error_log( "Service {$service} consent changed to: " . ( $consented ? 'granted' : 'denied' ) );
+}, 10, 2 );
+`
+
+JavaScript:
+`
+//check service consent
+if ( wp_has_service_consent( 'youtube' ) ) {
+    //activate tracking
+}
+
+//check if explicitly denied
+if ( wp_is_service_denied( 'facebook-pixel' ) ) {
+    //service denied
+}
+
+//set service consent
+wp_set_service_consent( 'youtube', true );
+
+//listen for service consent changes
+document.addEventListener( 'wp_consent_api_status_change_service', function( e ) {
+    console.log( 'Service: ' + e.detail.service + ', consented: ' + e.detail.value );
+});
 
 ## Existing integrations
 Categorized, and sorted alphabetically
@@ -99,6 +146,10 @@ Below are the plugins used to set up the demo site:
 window.wp_consent_type = 'optin'
 
 //dispatch event when consent type is defined. This is useful if the region is detected server side, so the consent type is defined later during the pageload
+let event = new CustomEvent('wp_consent_type_defined');
+document.dispatchEvent( event );
+
+//dispatch event when consent type is defined
 let event = new CustomEvent('wp_consent_type_defined');
 document.dispatchEvent( event );
 
@@ -190,13 +241,21 @@ Preferences:
 Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences.
 
 == Changelog ==
+= 2.0.0 =
+* New: Service-level consent API - allows granular consent control per service in addition to category-based consent
+* New: `wp_has_service_consent()` function to check if a specific service has consent
+* New: `wp_is_service_denied()` function to check if a specific service is explicitly denied
+* New: `wp_set_service_consent()` function to set consent for a specific service
+* New: `wp_consent_service_changed` action hook fires when service consent changes
+* New: JavaScript functions `wp_has_service_consent()`, `wp_is_service_denied()`, and `wp_set_service_consent()`
+* New: JavaScript event `wp_consent_api_status_change_service` for service consent changes
+* Improvement: Added type hints throughout codebase for better code quality and IDE support
+* Improvement: Added `init()` method for cleaner plugin initialization
+
 = 1.0.8 =
 * Updated tested up to
 * Dropped loading of translations, and loading of plugin_data, to prevent translation loading notices by WordPress 6.7, props @mujuonly
 * Dropped obsolete function wp_has_cookie_info, props @szepeviktor
-
-= 1.0.7 =
-* Tested up to
 
 = 1.0.7 =
 * Tested up to
