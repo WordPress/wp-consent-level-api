@@ -1,12 +1,12 @@
 === WP Consent API ===
-Contributors: wordpressdotorg, RogierLankhorst, xkon, aurooba, mujuonly, phpgeekdk, paapst, aahulsebos, pputzer, markwolters, szepeviktor
+Contributors: wordpressdotorg, RogierLankhorst, xkon, aurooba, mujuonly, phpgeekdk, paapst, aahulsebos, pputzer, markwolters, szepeviktor, sjinks
 Tags: consent, privacy, cookies, api, compliance
 Requires at least: 5.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 
 Simple Consent API to read and register the current consent category.
 
@@ -245,6 +245,9 @@ Preferences:
 Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences.
 
 == Changelog ==
+= 2.0.1 =
+Fix: typo in 'preferences' category, causing comment cookies functionality to follow functional category consent, props @sjinks
+
 = 2.0.0 =
 * New: Service-level consent API - allows granular consent control per service in addition to category-based consent
 * New: `wp_has_service_consent()` function to check if a specific service has consent
