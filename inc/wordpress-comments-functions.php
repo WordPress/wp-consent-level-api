@@ -54,7 +54,7 @@ add_action( 'init', 'wp_consent_api_wordpress_comments_cookies' );
  * @param bool       $cookies_consent Comment author's consent to store cookies.
  */
 function wp_consent_api_set_comment_cookies( $comment, $user, $cookies_consent ) {
-	$cookies_consent = wp_has_consent( 'preference' );
+	$cookies_consent = wp_has_consent( 'preferences' );
 	wp_set_comment_cookies( $comment, $user, $cookies_consent );
 }
 
