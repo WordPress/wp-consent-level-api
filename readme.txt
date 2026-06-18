@@ -129,6 +129,7 @@ Categorized, and sorted alphabetically
 - [GDPR Cookie Consent Plugin - CCPA Ready](https://www.webtoffee.com/product/gdpr-cookie-consent/).
 - [GetTerms](https://getterms.io/consent-manager/).
 - [iubenda | All-in-one Compliance](https://wordpress.org/plugins/iubenda-cookie-law-solution/).
+- [Lawwwing](https://wordpress.org/plugins/ibamu/).
 - [Pressidium Cookie Consent](https://wordpress.org/plugins/pressidium-cookie-consent/).
 - [TrustArc Cookie Consent Manager](https://wordpress.org/plugins/trustarc-cookie-consent-manager/)
 
