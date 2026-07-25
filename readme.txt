@@ -116,6 +116,7 @@ Categorized, and sorted alphabetically
 - [Abconsent Sirdata CMP](https://wordpress.org/plugins/sirdata-cmp/).
 - [Beautiful Cookie Consent Banner](https://wordpress.org/plugins/beautiful-and-responsive-cookie-consent/).
 - [Clickio Consent](https://wordpress.org/plugins/clickio-consent/)
+- [Cookie Consent CMP](https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress).
 - [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
 - [Consent Studio](https://consent.studio/).
 - [consentmanager](https://wordpress.org/plugins/consent-manager/).
