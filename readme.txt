@@ -129,6 +129,7 @@ Categorized, and sorted alphabetically
 - [GDPR Cookie Compliance](https://wordpress.org/plugins/gdpr-cookie-compliance/).
 - [GDPR Cookie Consent Plugin - CCPA Ready](https://www.webtoffee.com/product/gdpr-cookie-consent/).
 - [GetTerms](https://getterms.io/consent-manager/).
+- [HandL UTM Grabber](https://wordpress.org/plugins/handl-utm-grabber/).
 - [iubenda | All-in-one Compliance](https://wordpress.org/plugins/iubenda-cookie-law-solution/).
 - [Lawwwing](https://wordpress.org/plugins/ibamu/).
 - [Pressidium Cookie Consent](https://wordpress.org/plugins/pressidium-cookie-consent/).
@@ -139,6 +140,7 @@ Categorized, and sorted alphabetically
 - [AFL UTM Tracker Plugin](https://www.appfromlab.com/product/woocommerce-utm-tracker-plugin/).
 - [Burst Statistics](https://wordpress.org/plugins/burst-statistics/).
 - [Google Site Kit](https://wordpress.org/plugins/google-site-kit/).
+- [HandL UTM Grabber](https://wordpress.org/plugins/handl-utm-grabber/).
 - [Pixel Manager for WooCommerce](https://wordpress.org/plugins/woocommerce-google-adwords-conversion-tracking-tag/).
 - [Woo](https://wordpress.org/plugins/woocommerce/).
 - [WP Statistics](https://wordpress.org/plugins/wp-statistics/).
