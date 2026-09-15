@@ -403,35 +403,3 @@ function wp_add_cookie_info( string $name, string $plugin_or_service, string $ca
 function wp_get_cookie_info( $name = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	return WP_Consent_API::$cookie_info->get_cookie_info( $name );
 }
-
-/**
- * Wrapper function to set a cookie, taking into account actual user consent, if supported by plugins
- *
- * @param string $name name of the cookie.
- * @param string $value value of the cookie.
- * @param string $consent_category Functional, preferences, statistics-anonymous, statistics, marketing.
- * @param int    $expires expiration of the cookie.
- * @param string $path path of the cookie.
- * @param string $domain domain where the cookie is set.
- * @param bool   $secure if it is set with the secure flag.
- * @param bool   $httponly if it is set with the httponly flag.
- *
- * @return void
- */
-function wp_set_cookie( $name, $value = '', $consent_category = '', $expires = 0, $path = '', $domain = '', $secure = false, $httponly = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
-	$name  = sanitize_text_field( $name );
-	$value = sanitize_text_field( $value );
-
-	$expires = apply_filters( 'wp_setcookie_expires', intval( $expires ), $name, $value ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
-	$path    = apply_filters( 'wp_setcookie_path', sanitize_text_field( $path ), $name, $value ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
-	$domain  = apply_filters( 'wp_setcookie_domain', sanitize_text_field( $domain ), $name, $value ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
-
-	$consent_category = apply_filters( 'wp_setcookie_category', wp_validate_consent_category( $consent_category ), $name, $value ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
-	if ( empty( $consent_category ) ) {
-		_doing_it_wrong( 'wp_setcookie', esc_html__( 'Missing consent category. A functional, preferences, statistics-anonymous, statistics or marketing category should be passed when using wp_setcookie.', 'wp-consent-api' ), '1.0.0' );
-	}
-
-	if ( wp_has_consent( $consent_category ) ) {
-		setcookie( $name, $value, $expires, $path, $domain, $secure, $httponly );
-	}
-}

@@ -6,7 +6,7 @@ License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.0.1
+Stable tag: 2.1.0
 
 Simple Consent API to read and register the current consent category.
 
@@ -247,6 +247,9 @@ Preferences:
 Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences.
 
 == Changelog ==
+= 2.1.0 =
+Change: internally unused wp_set_cookie() function dropped in favor of upcoming WordPress core wp_set_cookie() function.
+
 = 2.0.1 =
 Fix: typo in 'preferences' category, causing comment cookies functionality to follow functional category consent, props @sjinks
 
