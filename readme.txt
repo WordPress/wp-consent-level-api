@@ -114,6 +114,7 @@ Categorized, and sorted alphabetically
 
 = Consent Management Providers =
 - [Abconsent Sirdata CMP](https://wordpress.org/plugins/sirdata-cmp/).
+- [Arqam360 Cookie Consent Banner](https://wordpress.org/plugins/arqam360-consent-privacy-pdplgdpr/).
 - [Beautiful Cookie Consent Banner](https://wordpress.org/plugins/beautiful-and-responsive-cookie-consent/).
 - [Clickio Consent](https://wordpress.org/plugins/clickio-consent/)
 - [Cookie Consent CMP](https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress).
