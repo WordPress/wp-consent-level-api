@@ -133,6 +133,7 @@ Categorized, and sorted alphabetically
 - [Lawwwing](https://wordpress.org/plugins/ibamu/).
 - [Pressidium Cookie Consent](https://wordpress.org/plugins/pressidium-cookie-consent/).
 - [TrustArc Cookie Consent Manager](https://wordpress.org/plugins/trustarc-cookie-consent-manager/)
+- [WeePie Cookie Allow](https://weepie-plugins.com/)
 
 = Consent Requiring Plugins =
 - [AddToAny](https://wordpress.org/plugins/add-to-any/).
