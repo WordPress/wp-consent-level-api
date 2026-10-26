@@ -136,6 +136,7 @@ Categorized, and sorted alphabetically
 - [Pressidium Cookie Consent](https://wordpress.org/plugins/pressidium-cookie-consent/).
 - [TrustArc Cookie Consent Manager](https://wordpress.org/plugins/trustarc-cookie-consent-manager/)
 - [WeePie Cookie Allow](https://weepie-plugins.com/)
+- [WyConsent](https://wycan.fr/en/plugin/wyconsent-self-hosted-gdpr-law-25-cookie-consent-plugin/).
 
 = Consent Requiring Plugins =
 - [AddToAny](https://wordpress.org/plugins/add-to-any/).
