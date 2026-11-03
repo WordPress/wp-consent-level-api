@@ -118,6 +118,7 @@ Categorized, and sorted alphabetically
 - [Beautiful Cookie Consent Banner](https://wordpress.org/plugins/beautiful-and-responsive-cookie-consent/).
 - [Clickio Consent](https://wordpress.org/plugins/clickio-consent/)
 - [Cookie Consent CMP](https://github.com/szepeviktor/cookie-consent-cmp-for-wordpress).
+- [Cookie Rocks](https://cookierocks.com/docs/integrations/wp-consent-api/).
 - [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
 - [Consent Studio](https://consent.studio/).
 - [consentmanager](https://wordpress.org/plugins/consent-manager/).
