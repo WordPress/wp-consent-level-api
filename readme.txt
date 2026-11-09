@@ -156,6 +156,19 @@ Below are the plugins used to set up the demo site:
 - [The example plugin](https://github.com/rlankhorst/consent-api-example-plugin)
 
 = javascript, consent management plugin =
+If your plugin sets the consent type server side with the "wp_get_consent_type" filter, the API passes it to the clientside, and nothing more is needed.
+
+If your plugin sets the consent type in javascript, for example after detecting the visitor's region, also enable the "wp_consent_api_waitfor_consent_hook" filter. Until the consent type is set, the API treats it as if there is no consent management plugin, and all consent categories return true. With this filter enabled, tracking plugins wait for the "wp_consent_type_defined" event instead.
+
+Set the consent type and dispatch the event on every page load, also for returning visitors who already made a choice.
+
+PHP:
+`
+//tell tracking plugins to wait until the consent type is set in javascript
+add_filter( 'wp_consent_api_waitfor_consent_hook', '__return_true' );
+`
+
+JavaScript:
 `
 //set consent type
 window.wp_consent_type = 'optin'
@@ -182,11 +195,20 @@ document.addEventListener("wp_listen_for_consent_change", function (e) {
 });
 
 //basic implementation of consent check:
-if (wp_has_consent('marketing')){
-  activateMarketing();
-  console.log("set marketing stuff now!");
+function checkConsent() {
+  if (wp_has_consent('marketing')){
+    activateMarketing();
+    console.log("set marketing stuff now!");
+  } else {
+    console.log("No marketing stuff please!");
+  }
+}
+
+//if the consent management plugin sets the consent type in javascript, wait until it is defined
+if (window.waitfor_consent_hook && typeof window.wp_consent_type === 'undefined') {
+  document.addEventListener('wp_consent_type_defined', checkConsent);
 } else {
-  console.log("No marketing stuff please!");
+  checkConsent();
 }
 `
 = PHP =
