@@ -136,6 +136,7 @@ Categorized, and sorted alphabetically
 - [Lawwwing](https://wordpress.org/plugins/ibamu/).
 - [Pressidium Cookie Consent](https://wordpress.org/plugins/pressidium-cookie-consent/).
 - [TrustArc Cookie Consent Manager](https://wordpress.org/plugins/trustarc-cookie-consent-manager/)
+- [Velo Consent](https://wordpress.org/plugins/velo-consent/).
 - [WeePie Cookie Allow](https://weepie-plugins.com/)
 - [WyConsent](https://wycan.fr/en/plugin/wyconsent-self-hosted-gdpr-law-25-cookie-consent-plugin/).
 
