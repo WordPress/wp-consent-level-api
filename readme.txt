@@ -126,6 +126,7 @@ Categorized, and sorted alphabetically
 - [Cookiebot](https://wordpress.org/plugins/cookiebot/).
 - [CookieFirst](https://wordpress.org/plugins/cookiefirst-gdpr-cookie-consent-banner/).
 - [CookieHub](https://wordpress.org/plugins/cookiehub/).
+- [CookiePilot](https://wordpress.org/plugins/cookiepilot/).
 - [CookieTractor](https://wordpress.org/plugins/cookietractor/).
 - [CookieYes – Cookie Banner for Cookie Consent](https://wordpress.org/plugins/cookie-law-info/).
 - [GDPR Cookie Compliance](https://wordpress.org/plugins/gdpr-cookie-compliance/).
